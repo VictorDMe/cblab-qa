@@ -24,6 +24,14 @@ Cypress.Commands.add("login", () => {
     cy.get(".buttons-container > :nth-child(1)").click();
 });
 
+Cypress.Commands.add('setMobileViewport', () => {
+  cy.viewport('iphone-xr');
+});
+
+Cypress.Commands.add('setDesktopViewport', () => {
+  cy.viewport(1920, 1080);
+});
+
 //
 //
 // -- This is a child command --
