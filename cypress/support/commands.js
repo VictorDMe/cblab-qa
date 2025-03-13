@@ -53,7 +53,7 @@ Cypress.Commands.add('selecionarEstado', (estado) => {
   cy.get('.select').click(); 
   cy.wait(2000);
   cy.get('.action-sheet-button-inner').contains(estado).click({ force: true }); 
-  cy.get('.content-container button').click(); 
+  cy.get('button').contains('CONTINUAR').click(); 
 });
 
 Cypress.Commands.add('selecionarVoucher', (tituloVoucher) => {
