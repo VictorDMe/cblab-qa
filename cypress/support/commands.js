@@ -32,6 +32,18 @@ Cypress.Commands.add('setDesktopViewport', () => {
   cy.viewport(1920, 1080);
 });
 
+Cypress.Commands.add('clickPromocoes', () => {
+  cy.get('.nav-bar-content > :nth-child(2)').click();
+});
+
+Cypress.Commands.add('clickDelivery', () => {
+  cy.get('.nav-bar-content > :nth-child(1)').click(); 
+});
+
+Cypress.Commands.add('clickVouchers', () => {
+  cy.get('.nav-bar-content > :nth-child(3)').click(); 
+});
+
 //
 //
 // -- This is a child command --

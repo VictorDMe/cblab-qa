@@ -9,6 +9,7 @@
   "author": "Victor Menezes",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^14.1.0"
+    "cypress": "^14.1.0",
+    "cypress-browser-permissions": "^1.1.0"
   }
 }
