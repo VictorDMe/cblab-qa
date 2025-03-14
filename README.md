@@ -34,6 +34,10 @@ O projeto com a automação realizada está disponível [neste link](#).
 - **Problemas Encontrados:** 
   - Tela de erro no pagamento por PIX.
   - A escrita dos testes se tornou bastante custosa e suscetível a quebras a médio e longo prazo, à medida que a aplicação for evoluindo. Isso se deve porque a maioria dos elementos não possui identificadores como ID ou data-cy, tornando a automação mais frágil e difícil de manter.
+ 
+<p align="center">
+  <img src="./prints/erro_pix.png" width="230px" />
+</p>
 
 Referência: [Cypress Best Practices](https://docs.cypress.io/app/core-concepts/best-practices#How-It-Works)
 
@@ -56,3 +60,8 @@ Como executar os testes:
 ```sh
     $ newman run CBLab.postman_col
 ```
+
+Exemplo de saída:
+<p align="center">
+  <img src="./prints/newman_output.png" width="400px" />
+</p>
