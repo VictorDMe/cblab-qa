@@ -1,0 +1,325 @@
+{
+	"info": {
+		"_postman_id": "f55e8e7a-b2ee-44e0-93fa-782ecf48edf1",
+		"name": "CBLab",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31520887"
+	},
+	"item": [
+		{
+			"name": "ObtemProdutos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummyjson.com/carts",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"carts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AdicionaProduto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code é 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Valida se resposta possui os campos esperados\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.be.an('object');\r",
+							"  pm.expect(responseData.id).to.exist;\r",
+							"  pm.expect(responseData.products).to.exist;\r",
+							"  pm.expect(responseData.total).to.exist;\r",
+							"  pm.expect(responseData.discountedTotal).to.exist;\r",
+							"  pm.expect(responseData.userId).to.exist;\r",
+							"  pm.expect(responseData.totalProducts).to.exist;\r",
+							"  pm.expect(responseData.totalQuantity).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Valida array de produtos e os elementos\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.products).to.exist.and.to.be.an('array');\r",
+							"\r",
+							"    responseData.products.forEach((product) => {\r",
+							"        pm.expect(product).to.be.an('object');\r",
+							"        pm.expect(product.id).to.be.a('number');\r",
+							"        pm.expect(product.title).to.be.a('string');\r",
+							"        pm.expect(product.price).to.be.a('number');\r",
+							"        pm.expect(product.quantity).to.be.a('number');\r",
+							"        pm.expect(product.total).to.be.a('number');\r",
+							"        pm.expect(product.discountPercentage).to.be.a('number');\r",
+							"        pm.expect(product.discountedPrice).to.be.a('number');\r",
+							"        pm.expect(product.thumbnail).to.be.a('string');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Tempo de resposta menor que 500ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": 1,\r\n    \"products\": [\r\n        {\r\n            \"id\": 28,\r\n            \"quantity\": 9\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/carts/add",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"carts",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AtualizaCarrinho",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Tempo de resposta é menor que 500ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code é 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content type é application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Id é inteiro positivo\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.id).to.be.a('number');\r",
+							"    pm.expect(responseData.id).to.be.at.least(0);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Array de produtos possui a quantidade esperada de elementos\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.products).to.be.an('array').and.to.have.lengthOf(3);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Valida atributos dos produtos\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.products).to.be.an('array');\r",
+							"\r",
+							"    responseData.products.forEach(function(product) {\r",
+							"        pm.expect(product.title).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Title should be a non-empty string\");\r",
+							"        pm.expect(product.price).to.be.a('number').and.to.be.at.least(0, \"Price should be a non-negative number\");\r",
+							"        pm.expect(product.quantity).to.be.a('number').and.to.be.at.least(0, \"Quantity should be a non-negative number\");\r",
+							"        pm.expect(product.total).to.be.a('number').and.to.be.at.least(0, \"Total should be a non-negative number\");\r",
+							"        pm.expect(product.discountPercentage).to.be.a('number').and.to.be.at.least(0, \"Discount Percentage should be a non-negative number\");\r",
+							"        pm.expect(product.discountedPrice).to.be.a('number').and.to.be.at.least(0, \"Discounted Price should be a non-negative number\");\r",
+							"        pm.expect(product.thumbnail).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Thumbnail should be a non-empty string\");\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checa se Decoration Swing foi adicionado\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    const products = responseData.products;\r",
+							"\r",
+							"    let isDecorationSwingAdded = false;\r",
+							"    products.forEach(function(product) {\r",
+							"        if (product.title === \"Decoration Swing\") {\r",
+							"            isDecorationSwingAdded = true;\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    pm.expect(isDecorationSwingAdded).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"merge\": true, \r\n    \"products\": [\r\n        {\r\n        \"id\": 43,\r\n        \"quantity\": 1\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/carts/21",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"carts",
+						"21"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeletaCarrinho",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code é 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Tempo de resposta é menor que 500ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Valida Schama da resposta\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.id).to.exist.and.to.be.a('number');\r",
+							"    \r",
+							"    pm.expect(responseData.products).to.exist.and.to.be.an('array');\r",
+							"    responseData.products.forEach(function(product) {\r",
+							"        pm.expect(product).to.be.an('object');\r",
+							"        pm.expect(product.id).to.exist.and.to.be.a('number');\r",
+							"        pm.expect(product.title).to.exist.and.to.be.a('string');\r",
+							"        pm.expect(product.price).to.exist.and.to.be.a('number');\r",
+							"        pm.expect(product.quantity).to.exist.and.to.be.a('number');\r",
+							"        pm.expect(product.total).to.exist.and.to.be.a('number');\r",
+							"        pm.expect(product.discountPercentage).to.exist.and.to.be.a('number');\r",
+							"        pm.expect(product.discountedTotal).to.exist.and.to.be.a('number');\r",
+							"        pm.expect(product.thumbnail).to.exist.and.to.be.a('string');\r",
+							"    });\r",
+							"\r",
+							"    pm.expect(responseData.total).to.exist.and.to.be.a('number');\r",
+							"    pm.expect(responseData.discountedTotal).to.exist.and.to.be.a('number');\r",
+							"    pm.expect(responseData.userId).to.exist.and.to.be.a('number');\r",
+							"    pm.expect(responseData.totalProducts).to.exist.and.to.be.a('number');\r",
+							"    pm.expect(responseData.totalQuantity).to.exist.and.to.be.a('number');\r",
+							"    pm.expect(responseData.isDeleted).to.exist.and.to.be.true;\r",
+							"    pm.expect(responseData.deletedOn).to.exist.and.to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Array de produtos está presente e possui a quantiadade de produtos esperada\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.products).to.exist.and.to.be.an('array');\r",
+							"    pm.expect(responseData.products).to.have.lengthOf(2);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Valida propriedades do array de produtos\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.products).to.be.an('array').and.to.have.lengthOf.at.least(1);\r",
+							"\r",
+							"    responseData.products.forEach(function(product) {\r",
+							"        pm.expect(product).to.be.an('object');\r",
+							"        pm.expect(product.title).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Title should not be empty\");\r",
+							"        pm.expect(product.thumbnail).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Thumbnail should not be empty\");\r",
+							"        pm.expect(product.price).to.be.a('number').and.to.be.at.least(0, \"Price should be a non-negative number\");\r",
+							"        pm.expect(product.quantity).to.be.a('number').and.to.be.at.least(0, \"Quantity should be a non-negative number\");\r",
+							"        pm.expect(product.total).to.be.a('number').and.to.be.at.least(0, \"Total should be a non-negative number\");\r",
+							"        pm.expect(product.discountPercentage).to.be.a('number').and.to.be.at.least(0, \"DiscountPercentage should be a non-negative number\");\r",
+							"        pm.expect(product.discountedTotal).to.be.a('number').and.to.be.at.least(0, \"DiscountedTotal should be a non-negative number\");\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://dummyjson.com/carts/21",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"carts",
+						"21"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
